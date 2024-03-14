@@ -1,0 +1,90 @@
+{
+  "name": "snippet-on-file-type",
+  "displayName": "Snippet on File Type",
+  "description": "Insert different code snippets based on the file type",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.87.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "snippet-on-file-type.insertSnippetBasedOnFileType",
+        "title": "Insert a code snippet based on the file type"
+      }
+    ],
+    "configuration": {
+      "title": "Configuration",
+      "properties": {
+        "snippet-on-file-type.defineSnippets": {
+          "type": "array",
+          "default": [],
+          "description": "Define user snippets",
+          "items": {
+            "type": "object",
+            "default": {},
+            "description": "Configure snippets per file type",
+            "items": {
+              "type": "object",
+              "required": [
+                "fileType",
+                "snippets"
+              ],
+              "properties": {
+                "fileType": {
+                  "type": "string",
+                  "description": "The type of file (e.g., python, javascript)"
+                },
+                "snippets": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "content"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the snippet"
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The snippet text"
+                      }
+                    }
+                  },
+                  "description": "Array of snippets for this file type"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.87.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-cli": "^0.0.6",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}
