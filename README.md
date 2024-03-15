@@ -1,6 +1,6 @@
 # Snippet on File Type
 
-A VSCode extension for inserting different code snippets based on the file type. Works well with shortcuts.
+A VSCode extension for inserting different code snippets based on the file type. Works well with shortcuts and Vim.
 
 ## Recommended Usage
 
@@ -16,12 +16,17 @@ A VSCode extension for inserting different code snippets based on the file type.
       "typescriptreact",
       "vue"
     ],
-    "snippets": [
-      {
-        "name": "print",
-        "content": "console.log($1);\n"
-      }
-    ]
+    "snippets": {
+      "print": "console.log($1);\n",
+      "log": "console.log(`$1`, \"background: #1e1f22; color: #bcbec4\");\n",
+    }
+  },
+  {
+    "fileTypes": ["go"],
+    "snippets": {
+      "print": "fmt.Println($1)\n",
+      "error": "if err != nil {\n    return err\n}\n$1"
+    }
   }
 ],
 ```
