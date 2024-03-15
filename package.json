@@ -2,7 +2,7 @@
   "name": "snippet-on-file-type",
   "displayName": "Snippet on File Type",
   "description": "Insert different code snippets based on the file type",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "url": "https://github.com/zenpk/snippet-on-file-type"
   },
@@ -36,18 +36,20 @@
             "items": {
               "type": "object",
               "required": [
-                "fileType",
+                "fileTypes",
                 "snippets"
               ],
               "properties": {
-                "fileType": {
-                  "type": "string",
-                  "description": "The type of file (e.g., python, javascript)"
+                "fileTypes": {
+                  "type": "array",
+                  "default": [],
+                  "description": "The matching file types (e.g., [\"javascript\", \"typescript\"])"
                 },
                 "snippets": {
                   "type": "array",
                   "items": {
                     "type": "object",
+                    "default": [],
                     "required": [
                       "name",
                       "content"
@@ -55,10 +57,12 @@
                     "properties": {
                       "name": {
                         "type": "string",
+                        "default": "",
                         "description": "Name of the snippet"
                       },
                       "content": {
                         "type": "string",
+                        "default": "",
                         "description": "The snippet text"
                       }
                     }

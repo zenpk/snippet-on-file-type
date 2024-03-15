@@ -5,7 +5,7 @@ import * as vscode from "vscode";
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 type Defined = {
-  fileType: string;
+  fileTypes: string[];
   snippets: Snippet[];
 };
 
@@ -17,6 +17,20 @@ export function activate(context: vscode.ExtensionContext) {
   // Use the console to output diagnostic information (console.log) and errors (console.error)
   // This line of code will only be executed once when your extension is activated
   // console.log('Congratulations, your extension "snippet-on-file-type" is now active!');
+  const snippetMap = new Map<string, Map<string, string>>(); // fileType -> snippetName -> snippet
+  const config = vscode.workspace.getConfiguration();
+  const definedSnippets = config.get(
+    "snippet-on-file-type.defineSnippets"
+  ) as Defined[];
+  for (const defined of definedSnippets) {
+    for (const fileType of defined.fileTypes) {
+      const typeMap = snippetMap.get(fileType) || new Map<string, string>();
+      for (const snippet of defined.snippets) {
+        typeMap.set(snippet.name, snippet.content);
+      }
+      snippetMap.set(fileType, typeMap);
+    }
+  }
 
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
@@ -29,22 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
       if (!fileType) {
         return;
       }
-      const config = vscode.workspace.getConfiguration();
-      const definedSnippets = config.get(
-        "snippet-on-file-type.defineSnippets"
-      ) as Defined[];
-      let snippetContent = "";
-      for (const defined of definedSnippets) {
-        if (defined.fileType === fileType) {
-          for (const snippet of defined.snippets) {
-            if (snippet.name === snippetName) {
-              snippetContent = snippet.content;
-              break;
-            }
-          }
-          break;
-        }
-      }
+      let snippetContent = snippetMap.get(fileType)?.get(snippetName) ?? "";
       if (snippetContent) {
         const snippetString = new vscode.SnippetString(snippetContent);
         vscode.window.activeTextEditor?.insertSnippet(snippetString);
