@@ -35,16 +35,26 @@ export function activate(context: vscode.ExtensionContext) {
   // The commandId parameter must match the command field in package.json
   let disposable = vscode.commands.registerCommand(
     "snippet-on-file-type.insertSnippetBasedOnFileType",
-    (snippetName: string) => {
+    async (snippetName: string, addNewLine = true) => {
       const editor = vscode.window.activeTextEditor;
       const fileType = editor?.document?.languageId;
       if (!fileType) {
         return;
       }
+      if (addNewLine) {
+        // add a new line below current cursor position
+        const position = editor.selection.active;
+        const newPosition = position.with(position.line + 1, 0);
+        const newSelection = new vscode.Selection(newPosition, newPosition);
+        await editor.edit((editBuilder) => {
+          editBuilder.insert(newPosition, "\n");
+        });
+        editor.selection = newSelection;
+      }
       let snippetContent = snippetMap.get(fileType)?.get(snippetName) ?? "";
       if (snippetContent) {
         const snippetString = new vscode.SnippetString(snippetContent);
-        vscode.window.activeTextEditor?.insertSnippet(snippetString);
+        editor.insertSnippet(snippetString);
       }
     }
   );
