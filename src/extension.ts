@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
-  let disposable = vscode.commands.registerCommand(
+  const disposable = vscode.commands.registerCommand(
     "snippet-on-file-type.insertSnippetBasedOnFileType",
     async (snippetName: string, addNewLine = true) => {
       const editor = vscode.window.activeTextEditor;
@@ -51,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
         });
         editor.selection = newSelection;
       }
-      let snippetContent = snippetMap.get(fileType)?.get(snippetName) ?? "";
+      const snippetContent = snippetMap.get(fileType)?.get(snippetName) ?? "";
       if (snippetContent) {
         const snippetString = new vscode.SnippetString(snippetContent);
         editor.insertSnippet(snippetString);

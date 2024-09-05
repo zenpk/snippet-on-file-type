@@ -15,11 +15,11 @@ A VSCode extension for inserting different code snippets based on the file type.
         "javascriptreact",
         "typescript",
         "typescriptreact",
-        "vue"
       ],
       "snippets": {
         "print": "console.log($1);",
-        "log": "console.log(`$1`, \"background: #1e1f22; color: #bcbec4\");",
+        "log": "console.log(`========== $1 ==========`);",
+        "error": "try {\n  $1\n} catch (e) {\n  console.log(e);\n}"
       }
     },
     {
