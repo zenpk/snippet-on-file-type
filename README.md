@@ -17,7 +17,8 @@ A VSCode extension for inserting different code snippets based on the file type.
         "typescriptreact"
       ],
       "snippets": {
-        "print": ["console.log($1);"], // $1 is where the cursor stops, you can also add $2, $3...
+        // $1 is where the cursor stops, you can also add $2, $3...
+        "print": ["console.log($1);"],
         "log": ["console.log(`========== $1 ==========`);"],
         "error": [
           "try {",
@@ -37,8 +38,8 @@ A VSCode extension for inserting different code snippets based on the file type.
           "if err != nil {",
           "    return $1, err",
           "}",
-          ""
-        ] // empty string at the end for adding a newline
+          "" // empty string at the end for adding a new line
+        ]
       }
     }
   ]
@@ -53,7 +54,8 @@ A VSCode extension for inserting different code snippets based on the file type.
 {
   "key": "ctrl+alt+p",
   "command": "snippet-on-file-type.insertSnippetBasedOnFileType",
-  "args": ["print", false] // insert the snippet at the cursor position instead of a newline
+  // false: insert the snippet at the cursor position instead of a new line
+  "args": ["print", false]
 }
 ```
 
@@ -86,4 +88,4 @@ A VSCode extension for inserting different code snippets based on the file type.
 
 ## Why not built-in User Snippets?
 
-The built-in User Snippets feature doesn't support shortcut configuration, making it hard to integrate with Vim. If the snippet's prefix is too short, it appears too often at the top of tab completion. If it's too long, it loses the benefit of a "shortcut".
+The built-in User Snippets feature doesn't support shortcut configuration, making it hard to integrate with Vim. If the snippet's prefix is too short, it appears too often at the top of tab completion. If it's too long, it loses the benefit of being a "shortcut".
