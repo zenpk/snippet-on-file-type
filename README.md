@@ -14,19 +14,31 @@ A VSCode extension for inserting different code snippets based on the file type.
         "javascript",
         "javascriptreact",
         "typescript",
-        "typescriptreact",
+        "typescriptreact"
       ],
       "snippets": {
-        "print": "console.log($1);",
-        "log": "console.log(`========== $1 ==========`);",
-        "error": "try {\n  $1\n} catch (e) {\n  console.log(e);\n}"
+        "print": ["console.log($1);"], // $1 is where the cursor stops, you can also add $2, $3...
+        "log": ["console.log(`========== $1 ==========`);"],
+        "error": [
+          "try {",
+          "  $1",
+          "} catch (e) {",
+          "  console.log(e);",
+          "}"
+        ]
       }
     },
     {
       "fileTypes": ["go"],
       "snippets": {
-        "print": "fmt.Println($1)",
-        "error": "if err != nil {\n    return $1err\n}"
+        "print": ["fmt.Println($1)"],
+        "log": ["log.Println(\"========== $1 ==========\")"],
+        "error": [
+          "if err != nil {",
+          "    return $1, err",
+          "}",
+          ""
+        ] // empty string at the end for adding a newline
       }
     }
   ]
@@ -41,7 +53,7 @@ A VSCode extension for inserting different code snippets based on the file type.
 {
   "key": "ctrl+alt+p",
   "command": "snippet-on-file-type.insertSnippetBasedOnFileType",
-  "args": ["print", false] // false: don't add a new line
+  "args": ["print", false] // insert the snippet at the cursor position instead of a newline
 }
 ```
 
@@ -51,11 +63,20 @@ A VSCode extension for inserting different code snippets based on the file type.
 {
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": ["<leader>", "g", "p"],
+      "before": ["<leader>", "g", "p"], // [g]enerate [p]rint
       "commands": [
         {
           "command": "snippet-on-file-type.insertSnippetBasedOnFileType",
           "args": ["print"]
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "g", "l"], // [g]enerate [l]og
+      "commands": [
+        {
+          "command": "snippet-on-file-type.insertSnippetBasedOnFileType",
+          "args": ["log"]
         }
       ]
     }

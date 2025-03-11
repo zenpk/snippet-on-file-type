@@ -1,9 +1,10 @@
 # Change Log
 
-All notable changes to the "snippet-on-file-type" extension will be documented in this file.
+## [1.0.0] - 2025-03-11
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+- Add array type configuration
+- Fix indentation
 
-## [Unreleased]
+## [0.0.1] - I forgot when
 
 - Initial release
